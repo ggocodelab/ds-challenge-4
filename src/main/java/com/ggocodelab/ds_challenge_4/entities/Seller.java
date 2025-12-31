@@ -1,11 +1,14 @@
 package com.ggocodelab.ds_challenge_4.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +24,9 @@ public class Seller {
 	private String email;
 	
 	private String phone;
+	
+	@OneToMany(mappedBy="seller")
+	private List<Sale> sales = new ArrayList<>();
 	
 	public Seller() {
 	}
@@ -62,6 +68,10 @@ public class Seller {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public List<Sale> getSales() {
+		return sales;
 	}
 
 	@Override
