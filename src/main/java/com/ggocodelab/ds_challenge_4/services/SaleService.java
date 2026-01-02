@@ -23,13 +23,24 @@ public class SaleService {
 	@Transactional(readOnly = true)
 	public Page<SaleDTO> report(
 			String seller, 
-			LocalDate startDate, 
-			LocalDate endDate, 
+			LocalDate minDate, 
+			LocalDate maxDate, 
 			Pageable pageable) {
-		Page<Sale> page = repository.report(seller, startDate, endDate, pageable);
+		
+		LocalDate today = LocalDate.now();
+		
+		if (maxDate == null){
+			maxDate = today;
+		}
+		
+		if(minDate == null) {
+			minDate = maxDate.minusYears(1);
+		}
+		
+		Page<Sale> page = repository.report(seller, minDate, maxDate, pageable);
 		return page.map(x -> new SaleDTO(x));
-	}
-	
+	}	
+
 	@Transactional(readOnly = true)
 	public SaleDTO findById(Long id) {
 		Optional<Sale> result = repository.findById(id);
@@ -37,9 +48,4 @@ public class SaleService {
 		SaleDTO dto = new SaleDTO(sale);
 		return dto;
 	}
-	
-	
-	
-	
-
 }

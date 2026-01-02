@@ -17,10 +17,10 @@ public interface SaleRepository extends JpaRepository<Sale, Long>{
 			+ "JOIN FETCH s.seller "
 			+ "WHERE UPPER(s.seller.name) "
 			+ "LIKE UPPER(CONCAT('%', :seller, '%')) "
-			+ "AND (:startDate IS NULL OR s.date >= :startDate )"
-			+ "AND (:endDate IS NULL OR s.date <= :endDate)")
-	Page<Sale> report(@Param("seller")String seller, 
-			@Param("startDate") LocalDate startDate, 
-			@Param("endDate") LocalDate endDate, 
+			+ "AND s.date BETWEEN :minDate AND :maxDate")
+	Page<Sale> report(
+			@Param("seller")String seller, 
+			@Param("minDate") LocalDate minDate, 
+			@Param("maxDate") LocalDate maxDate, 
 			Pageable pageable);
 }

@@ -28,12 +28,12 @@ public class SaleController {
 			@RequestParam(name="name", defaultValue="") String seller,
 			@RequestParam(required = false)
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-			LocalDate startDate,
+			LocalDate minDate,
 			@RequestParam(required = false)
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-			LocalDate endDate,
+			LocalDate maxDate,
 			Pageable pageable){
-		Page<SaleDTO> list = service.report(seller, startDate, endDate, pageable);
+		Page<SaleDTO> list = service.report(seller, minDate, maxDate, pageable);
 		return ResponseEntity.ok(list);
 	}
 	

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.ggocodelab.ds_challenge_4.entities.Sale;
 
-@JsonPropertyOrder({ "id", "amount", "date", "seller" })
+@JsonPropertyOrder({ "id", "amount", "date", "seller"})
 public class SaleDTO {
 	
 	private Long id;
