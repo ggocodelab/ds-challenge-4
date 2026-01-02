@@ -1,8 +1,11 @@
 package com.ggocodelab.ds_challenge_4.controllers;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,9 +25,15 @@ public class SaleController {
 	
 	@GetMapping(value = "/report")
 	public ResponseEntity<Page<SaleDTO>> report(
-			@RequestParam(name="name", defaultValue="") String seller, 
+			@RequestParam(name="name", defaultValue="") String seller,
+			@RequestParam(required = false)
+			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+			LocalDate startDate,
+			@RequestParam(required = false)
+			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+			LocalDate endDate,
 			Pageable pageable){
-		Page<SaleDTO> list = service.report(seller, pageable);
+		Page<SaleDTO> list = service.report(seller, startDate, endDate, pageable);
 		return ResponseEntity.ok(list);
 	}
 	

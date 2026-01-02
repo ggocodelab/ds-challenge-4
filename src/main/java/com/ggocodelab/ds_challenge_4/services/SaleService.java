@@ -1,5 +1,6 @@
 package com.ggocodelab.ds_challenge_4.services;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,12 @@ public class SaleService {
 	private SaleRepository repository;
 	
 	@Transactional(readOnly = true)
-	public Page<SaleDTO> report(String seller, Pageable pageable) {
-		Page<Sale> page = repository.report(seller, pageable);
+	public Page<SaleDTO> report(
+			String seller, 
+			LocalDate startDate, 
+			LocalDate endDate, 
+			Pageable pageable) {
+		Page<Sale> page = repository.report(seller, startDate, endDate, pageable);
 		return page.map(x -> new SaleDTO(x));
 	}
 	
