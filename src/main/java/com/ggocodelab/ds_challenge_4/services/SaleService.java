@@ -1,9 +1,10 @@
 package com.ggocodelab.ds_challenge_4.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +20,9 @@ public class SaleService {
 	private SaleRepository repository;
 	
 	@Transactional(readOnly = true)
-	public List<SaleDTO> findAll() {
-		List<Sale> result = repository.findAll();
-		return result.stream().map(x -> new SaleDTO(x)).toList();
+	public Page<SaleDTO> report(Pageable pageable) {
+		Page<Sale> page = repository.report(pageable);
+		return page.map(x -> new SaleDTO(x));
 	}
 	
 	@Transactional(readOnly = true)
@@ -31,6 +32,9 @@ public class SaleService {
 		SaleDTO dto = new SaleDTO(sale);
 		return dto;
 	}
+	
+	
+	
 	
 
 }
