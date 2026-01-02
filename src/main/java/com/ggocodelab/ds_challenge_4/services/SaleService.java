@@ -1,6 +1,7 @@
 package com.ggocodelab.ds_challenge_4.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,14 @@ public class SaleService {
 		List<Sale> result = repository.findAll();
 		return result.stream().map(x -> new SaleDTO(x)).toList();
 	}
+	
+	@Transactional(readOnly = true)
+	public SaleDTO findById(Long id) {
+		Optional<Sale> result = repository.findById(id);
+		Sale sale = result.get();
+		SaleDTO dto = new SaleDTO(sale);
+		return dto;
+	}
+	
 
 }
