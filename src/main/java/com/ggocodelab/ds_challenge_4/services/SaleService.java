@@ -20,8 +20,8 @@ public class SaleService {
 	private SaleRepository repository;
 	
 	@Transactional(readOnly = true)
-	public Page<SaleDTO> report(Pageable pageable) {
-		Page<Sale> page = repository.report(pageable);
+	public Page<SaleDTO> report(String seller, Pageable pageable) {
+		Page<Sale> page = repository.report(seller, pageable);
 		return page.map(x -> new SaleDTO(x));
 	}
 	

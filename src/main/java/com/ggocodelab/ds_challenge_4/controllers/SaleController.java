@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ggocodelab.ds_challenge_4.dto.SaleDTO;
@@ -20,8 +21,10 @@ public class SaleController {
 	private SaleService service;
 	
 	@GetMapping(value = "/report")
-	public ResponseEntity<Page<SaleDTO>> report(Pageable pageable){
-		Page<SaleDTO> list = service.report(pageable);
+	public ResponseEntity<Page<SaleDTO>> report(
+			@RequestParam(name="name", defaultValue="") String seller, 
+			Pageable pageable){
+		Page<SaleDTO> list = service.report(seller, pageable);
 		return ResponseEntity.ok(list);
 	}
 	
