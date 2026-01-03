@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ggocodelab.ds_challenge_4.dto.SaleDTO;
+import com.ggocodelab.ds_challenge_4.dto.SellerTotalDTO;
 import com.ggocodelab.ds_challenge_4.entities.Sale;
 import com.ggocodelab.ds_challenge_4.repositories.SaleRepository;
 
@@ -48,4 +49,22 @@ public class SaleService {
 		SaleDTO dto = new SaleDTO(sale);
 		return dto;
 	}
+	
+	@Transactional(readOnly = true)
+	public Page<SellerTotalDTO> summary( 
+			LocalDate minDate, 
+			LocalDate maxDate,
+			Pageable pageable
+	) {
+		LocalDate today = LocalDate.now();
+		
+		if(maxDate == null) {
+			maxDate = today;
+		}
+		if(minDate == null) {
+			minDate = maxDate.minusYears(1);
+		}
+		
+		return repository.summary(minDate, maxDate, pageable);
+	}	
 }

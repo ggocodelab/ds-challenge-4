@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ggocodelab.ds_challenge_4.dto.SaleDTO;
+import com.ggocodelab.ds_challenge_4.dto.SellerTotalDTO;
 import com.ggocodelab.ds_challenge_4.services.SaleService;
 
 @RestController
@@ -40,5 +41,21 @@ public class SaleController {
 	@GetMapping(value = "/{id}")
 	public SaleDTO findById(@PathVariable Long id) {
 		return service.findById(id);
+	}
+	
+	@GetMapping("/summary")
+	public ResponseEntity<Page<SellerTotalDTO>> summary(
+			
+			@RequestParam(required = false)
+			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+			LocalDate minDate,
+			
+			@RequestParam(required = false) 
+			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+			LocalDate maxDate,
+			Pageable pageable
+			) {
+		Page<SellerTotalDTO> page = service.summary(minDate, maxDate, pageable);
+		return ResponseEntity.ok(page);		
 	}
 }
