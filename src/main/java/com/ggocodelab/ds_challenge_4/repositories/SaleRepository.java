@@ -35,13 +35,15 @@ public interface SaleRepository extends JpaRepository<Sale, Long>{
 			)
 			FROM Sale s
 			JOIN s.seller
-			WHERE s.date BETWEEN :minDate AND :maxDate
+			WHERE s.date BETWEEN COALESCE(:minDate, s.date) 
+			                 AND COALESCE(:maxDate, s.date)
 			GROUP BY s.seller.id, s.seller.name
 			""",
 	countQuery = """
 			SELECT COUNT(DISTINCT s.seller.id)
 			FROM Sale s
-			WHERE s.date BETWEEN :minDate AND :maxDate
+			WHERE s.date BETWEEN COALESCE(:minDate, s.date) 
+			                 AND COALESCE(:maxDate, s.date)
 			""")
 	Page<SellerTotalDTO> summary(
 			@Param("minDate") LocalDate minDate,

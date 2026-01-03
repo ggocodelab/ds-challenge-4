@@ -43,6 +43,7 @@ public class SaleController {
 		return service.findById(id);
 	}
 	
+	
 	@GetMapping("/summary")
 	public ResponseEntity<Page<SellerTotalDTO>> summary(
 			

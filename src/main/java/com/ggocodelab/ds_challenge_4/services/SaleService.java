@@ -50,21 +50,23 @@ public class SaleService {
 		return dto;
 	}
 	
+		
 	@Transactional(readOnly = true)
 	public Page<SellerTotalDTO> summary( 
 			LocalDate minDate, 
 			LocalDate maxDate,
 			Pageable pageable
 	) {
-		LocalDate today = LocalDate.now();
-		
-		if(maxDate == null) {
-			maxDate = today;
-		}
-		if(minDate == null) {
-			minDate = maxDate.minusYears(1);
-		}
-		
+		if(minDate != null || maxDate != null) {
+			LocalDate today = LocalDate.now();
+			
+			if(maxDate == null) {
+				maxDate = today;
+			}
+			if(minDate == null) {
+				minDate = maxDate.minusYears(1);
+			}
+		}		
 		return repository.summary(minDate, maxDate, pageable);
 	}	
 }
