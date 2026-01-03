@@ -1,7 +1,10 @@
 package com.ggocodelab.ds_challenge_4.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class SellerTotalDTO {
 	
+	@JsonIgnore
 	private Long sellerId;
 	private String sellerName;
 	private Double total;
