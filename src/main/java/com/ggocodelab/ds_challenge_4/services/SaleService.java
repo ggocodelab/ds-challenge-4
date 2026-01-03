@@ -28,20 +28,21 @@ public class SaleService {
 			LocalDate maxDate, 
 			Pageable pageable
 	) {
+		LocalDate today = LocalDate.now();
 		
-		if(minDate != null || maxDate != null) {
+		if(minDate == null && maxDate == null) {			
+			maxDate = today;
+			minDate = today.minusMonths(12);			
+		}	
 		
-			LocalDate today = LocalDate.now();
-			
-			if (maxDate == null){
-				maxDate = today;
-			}
-			
-			if(minDate == null) {
-				minDate = maxDate.minusYears(1);
-			}
+		if (maxDate == null){
+			maxDate = today;
 		}
-		
+			
+		if(minDate == null) {
+			minDate = maxDate.minusYears(1);
+		}
+			
 		Page<Sale> page = repository.report(seller, minDate, maxDate, pageable);
 		return page.map(x -> new SaleDTO(x));
 	}	
