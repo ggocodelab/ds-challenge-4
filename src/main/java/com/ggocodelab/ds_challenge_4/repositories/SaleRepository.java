@@ -39,6 +39,7 @@ public interface SaleRepository extends JpaRepository<Sale, Long>{
 			WHERE s.date BETWEEN COALESCE(:minDate, s.date) 
 			                 AND COALESCE(:maxDate, s.date)
 			GROUP BY s.seller.id, s.seller.name
+			ORDER BY s.seller.name ASC
 			""",
 	countQuery = """
 			SELECT COUNT(DISTINCT s.seller.id)
