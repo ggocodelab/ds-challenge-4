@@ -49,8 +49,7 @@ public class SaleController {
 			
 			@RequestParam(required = false)
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-			LocalDate minDate,
-			
+			LocalDate minDate,			
 			@RequestParam(required = false) 
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 			LocalDate maxDate,

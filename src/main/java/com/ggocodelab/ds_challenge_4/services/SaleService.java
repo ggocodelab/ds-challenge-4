@@ -26,16 +26,20 @@ public class SaleService {
 			String seller, 
 			LocalDate minDate, 
 			LocalDate maxDate, 
-			Pageable pageable) {
+			Pageable pageable
+	) {
 		
-		LocalDate today = LocalDate.now();
+		if(minDate != null || maxDate != null) {
 		
-		if (maxDate == null){
-			maxDate = today;
-		}
-		
-		if(minDate == null) {
-			minDate = maxDate.minusYears(1);
+			LocalDate today = LocalDate.now();
+			
+			if (maxDate == null){
+				maxDate = today;
+			}
+			
+			if(minDate == null) {
+				minDate = maxDate.minusYears(1);
+			}
 		}
 		
 		Page<Sale> page = repository.report(seller, minDate, maxDate, pageable);
@@ -48,8 +52,7 @@ public class SaleService {
 		Sale sale = result.get();
 		SaleDTO dto = new SaleDTO(sale);
 		return dto;
-	}
-	
+	}	
 		
 	@Transactional(readOnly = true)
 	public Page<SellerTotalDTO> summary( 
